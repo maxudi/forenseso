@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  forense-slides:
+    build: .
+    ports:
+      - "3000:80"
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.forense-slides.rule=Host(`forense.example.com`)"
+      - "traefik.http.services.forense-slides.loadbalancer.server.port=80"

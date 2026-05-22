@@ -397,7 +397,7 @@ export function AIToolsSlide({ slide, chapterNum, chapterColor }) {
 
 // Future technologies slide
 export function FutureSlide({ slide, chapterNum, chapterColor }) {
-  const urgencyColor = { critical: 'red', medium: 'yellow', low: 'slate' };
+  const urgencyColor = { critical: 'red', medium: 'yellow', low: 'gray' };
   const urgencyLabel = { critical: 'Crítico', medium: 'Médio', low: 'Emergente' };
   return (
     <div className="min-h-screen tech-grid px-6 py-10 flex items-start justify-center">

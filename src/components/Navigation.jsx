@@ -1,7 +1,6 @@
-import { chapters } from '../data/slidesData';
 import { Icon, colorMap } from './Icons';
 
-export function Navigation({ currentChapter, currentSlide, totalSlides, onPrev, onNext, onGoHome, onGoQuiz }) {
+export function Navigation({ currentChapter, currentSlide, totalSlides, onPrev, onNext, onGoHome, onGoQuiz, chapters }) {
   const chapter = chapters[currentChapter];
   const colors = chapter?.color ? colorMap[chapter.color] : colorMap.cyan;
   const isFirst = currentChapter === 0 && currentSlide === 0;
@@ -68,7 +67,7 @@ export function Navigation({ currentChapter, currentSlide, totalSlides, onPrev, 
   );
 }
 
-export function ChapterMenu({ currentChapter, onNavigate, isOpen, onClose }) {
+export function ChapterMenu({ currentChapter, onNavigate, isOpen, onClose, chapters }) {
   if (!isOpen) return null;
 
   return (
@@ -115,7 +114,7 @@ export function ChapterMenu({ currentChapter, onNavigate, isOpen, onClose }) {
   );
 }
 
-export function TopBar({ onMenuToggle, chapter }) {
+export function TopBar({ onMenuToggle, chapter, onModuleChange, currentModule }) {
   const colors = chapter?.color ? colorMap[chapter.color] : colorMap.cyan;
 
   return (
@@ -130,13 +129,35 @@ export function TopBar({ onMenuToggle, chapter }) {
         {chapter?.title && (
           <span className="text-xs text-slate-500 font-mono truncate max-w-xs hidden md:block">{chapter.title}</span>
         )}
-        <button
-          onClick={onMenuToggle}
-          className="w-8 h-8 rounded-xl glass border border-slate-700 flex items-center justify-center text-slate-400 hover:text-white transition-all"
-          title="Menu de capítulos"
-        >
-          <Icon name="Menu" size={16} />
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => onModuleChange(1)}
+            className={`px-3 h-7 rounded-lg border text-xs font-mono transition-all ${
+              currentModule === 1
+                ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-400'
+                : 'glass border-slate-700 text-slate-500 hover:text-slate-300'
+            }`}
+          >
+            M1
+          </button>
+          <button
+            onClick={() => onModuleChange(2)}
+            className={`px-3 h-7 rounded-lg border text-xs font-mono transition-all ${
+              currentModule === 2
+                ? 'bg-cyan-500/20 border-cyan-500/40 text-cyan-400'
+                : 'glass border-slate-700 text-slate-500 hover:text-slate-300'
+            }`}
+          >
+            M2
+          </button>
+          <button
+            onClick={onMenuToggle}
+            className="w-8 h-8 rounded-xl glass border border-slate-700 flex items-center justify-center text-slate-400 hover:text-white transition-all"
+            title="Menu de capítulos"
+          >
+            <Icon name="Menu" size={16} />
+          </button>
+        </div>
       </div>
     </div>
   );

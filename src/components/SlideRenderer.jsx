@@ -17,7 +17,6 @@ import {
 } from './SlideComponents';
 import { CoverSlide, IntroSlide } from './SpecialSlides';
 import { QuizSlide } from './QuizSlide';
-import { chapters } from '../data/slidesData';
 
 function renderChapterSlide(slide, chapter) {
   const props = { slide, chapterNum: chapter.chapterNum, chapterColor: chapter.color };
@@ -41,13 +40,13 @@ function renderChapterSlide(slide, chapter) {
   return null;
 }
 
-export function SlideRenderer({ chapterIdx, slideIdx }) {
+export function SlideRenderer({ chapterIdx, slideIdx, chapters, quizQuestions, chapterNames }) {
   const chapter = chapters[chapterIdx];
   if (!chapter) return null;
 
   if (chapter.type === 'cover') return <CoverSlide chapter={chapter} />;
   if (chapter.type === 'intro') return <IntroSlide chapter={chapter} />;
-  if (chapter.type === 'quiz') return <QuizSlide />;
+  if (chapter.type === 'quiz') return <QuizSlide questions={quizQuestions} chapterNames={chapterNames} />;
 
   if (chapter.type === 'chapter') {
     const slide = chapter.slides?.[slideIdx];
@@ -59,7 +58,7 @@ export function SlideRenderer({ chapterIdx, slideIdx }) {
 }
 
 // Build a flat navigation list: [{chapterIdx, slideIdx}]
-export function buildNavList() {
+export function buildNavList(chapters) {
   const list = [];
   chapters.forEach((ch, ci) => {
     if (ch.type === 'cover' || ch.type === 'intro' || ch.type === 'quiz') {

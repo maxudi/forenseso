@@ -1,18 +1,9 @@
 import { useState } from 'react';
-import { quizQuestions } from '../data/quizData';
 import { Icon } from './Icons';
 
-const CHAPTER_NAMES = {
-  1: 'Cap. 1 — Evolução Histórica',
-  2: 'Cap. 2 — Ciência Forense',
-  3: 'Cap. 3 — Surgimento da CF',
-  4: 'Cap. 4 — Forense em SOs',
-  5: 'Cap. 5 — Cenário Atual',
-  6: 'Cap. 6 — Perspectivas Futuras',
-  7: 'Cap. 7 — Encerramento',
-};
-
-export function QuizSlide() {
+export function QuizSlide({ questions, chapterNames }) {
+  const quizQuestions = questions;
+  const CHAPTER_NAMES = chapterNames;
   const [currentQ, setCurrentQ] = useState(0);
   const [selected, setSelected] = useState(null); // index of selected option
   const [submitted, setSubmitted] = useState(false);

@@ -1,16 +1,58 @@
-# React + Vite
+# Forense Slides
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicacao React/Vite para aulas de Computacao Forense em Sistemas Operacionais.
 
-Currently, two official plugins are available:
+## Executar em desenvolvimento
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+1. Instale dependencias:
 
-## React Compiler
+```bash
+npm install
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+2. Crie o arquivo `.env` a partir do `.env.example` e preencha os dados SMTP.
 
-## Expanding the ESLint configuration
+3. Execute frontend + API SMTP juntos:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npm run dev
+```
+
+Frontend: `http://localhost:3000`
+
+API SMTP: `http://localhost:3001`
+
+## Simulado Geral / Estudo Dirigido
+
+O botao `Simulado` no topo abre uma avaliacao que engloba todos os modulos (M1 a M7).
+
+Fluxo:
+
+1. Aluno informa o nome.
+2. (Opcional) Aluno informa e-mail para receber copia.
+3. Responde as questoes.
+4. Pode usar `Limpar questoes` para reiniciar o simulado.
+5. Pode usar `Exportar PDF` ao finalizar.
+6. Clica em `Enviar Resultado`.
+7. O backend envia e-mail com pontuacao e lista de erros.
+
+Assunto enviado:
+
+`Exercicios de Revisao: Nome do Aluno`
+
+Quando o e-mail do aluno for informado, o sistema envia copia em `cc`.
+
+## Configuracao SMTP (Gmail)
+
+Defina no `.env`:
+
+```env
+SMTP_USER=seu-email@gmail.com
+SMTP_APP_PASSWORD=sua-senha-de-app
+SMTP_TO=max@netminas.com
+```
+
+Importante:
+
+- Nao armazene credenciais diretamente no frontend.
+- O `.env` esta no `.gitignore` e nao deve ser versionado.

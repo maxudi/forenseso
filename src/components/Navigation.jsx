@@ -114,8 +114,13 @@ export function ChapterMenu({ currentChapter, onNavigate, isOpen, onClose, chapt
   );
 }
 
-export function TopBar({ onMenuToggle, chapter, onModuleChange, currentModule }) {
-  const colors = chapter?.color ? colorMap[chapter.color] : colorMap.cyan;
+export function TopBar({ onMenuToggle, chapter, onModuleChange, onOpenSimulado, currentModule, simuladoOpen, moduleUnit }) {
+  const unitBadgeClass =
+    moduleUnit === 1
+      ? 'border-emerald-500/40 text-emerald-400 bg-emerald-500/10'
+      : moduleUnit === 2
+        ? 'border-cyan-500/40 text-cyan-400 bg-cyan-500/10'
+        : 'border-red-500/40 text-red-400 bg-red-500/10';
 
   return (
     <div className="fixed top-0 left-0 right-0 z-40 glass border-b border-slate-800/80">
@@ -126,10 +131,15 @@ export function TopBar({ onMenuToggle, chapter, onModuleChange, currentModule })
           </div>
           <span className="text-xs font-mono text-slate-400 hidden sm:block">CF · SOs · UNCISAL</span>
         </div>
-        {chapter?.title && (
-          <span className="text-xs text-slate-500 font-mono truncate max-w-xs hidden md:block">{chapter.title}</span>
-        )}
-        <div className="flex items-center gap-2">
+        <div className="hidden lg:flex items-center gap-2 text-xs font-mono text-slate-500">
+          <span className={`px-2 py-1 rounded border ${unitBadgeClass}`}>
+            U{moduleUnit}
+          </span>
+          {chapter?.title && (
+            <span className="truncate max-w-xs">{chapter.title}</span>
+          )}
+        </div>
+        <div className="flex items-center gap-1">
           <button
             onClick={() => onModuleChange(1)}
             className={`px-3 h-7 rounded-lg border text-xs font-mono transition-all ${
@@ -149,6 +159,66 @@ export function TopBar({ onMenuToggle, chapter, onModuleChange, currentModule })
             }`}
           >
             M2
+          </button>
+          <button
+            onClick={() => onModuleChange(3)}
+            className={`px-3 h-7 rounded-lg border text-xs font-mono transition-all ${
+              currentModule === 3
+                ? 'bg-orange-500/20 border-orange-500/40 text-orange-400'
+                : 'glass border-slate-700 text-slate-500 hover:text-slate-300'
+            }`}
+          >
+            M3
+          </button>
+          <button
+            onClick={() => onModuleChange(4)}
+            className={`px-3 h-7 rounded-lg border text-xs font-mono transition-all ${
+              currentModule === 4
+                ? 'bg-blue-500/20 border-blue-500/40 text-blue-400'
+                : 'glass border-slate-700 text-slate-500 hover:text-slate-300'
+            }`}
+          >
+            M4
+          </button>
+          <button
+            onClick={() => onModuleChange(5)}
+            className={`px-3 h-7 rounded-lg border text-xs font-mono transition-all ${
+              currentModule === 5
+                ? 'bg-purple-500/20 border-purple-500/40 text-purple-400'
+                : 'glass border-slate-700 text-slate-500 hover:text-slate-300'
+            }`}
+          >
+            M5
+          </button>
+          <button
+            onClick={() => onModuleChange(6)}
+            className={`px-3 h-7 rounded-lg border text-xs font-mono transition-all ${
+              currentModule === 6
+                ? 'bg-violet-500/20 border-violet-500/40 text-violet-400'
+                : 'glass border-slate-700 text-slate-500 hover:text-slate-300'
+            }`}
+          >
+            M6
+          </button>
+          <button
+            onClick={() => onModuleChange(7)}
+            className={`px-3 h-7 rounded-lg border text-xs font-mono transition-all ${
+              currentModule === 7
+                ? 'bg-red-500/20 border-red-500/40 text-red-400'
+                : 'glass border-slate-700 text-slate-500 hover:text-slate-300'
+            }`}
+          >
+            M7
+          </button>
+          <button
+            onClick={onOpenSimulado}
+            className={`px-3 h-7 rounded-lg border text-xs font-mono transition-all ${
+              simuladoOpen
+                ? 'bg-amber-500/20 border-amber-500/40 text-amber-300'
+                : 'glass border-slate-700 text-slate-500 hover:text-slate-300'
+            }`}
+          >
+            Simulado
           </button>
           <button
             onClick={onMenuToggle}

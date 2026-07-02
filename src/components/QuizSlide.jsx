@@ -1,8 +1,29 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Icon } from './Icons';
 
 export function QuizSlide({ questions, chapterNames }) {
-  const quizQuestions = questions;
+  const quizQuestions = useMemo(() => {
+    // Deterministic shuffle per question id to avoid answer-letter bias.
+    return questions.map((q) => {
+      const indices = q.options.map((_, idx) => idx);
+      let seed = (q.id * 1103515245 + 12345) & 0x7fffffff;
+
+      for (let i = indices.length - 1; i > 0; i -= 1) {
+        seed = (seed * 1103515245 + 12345) & 0x7fffffff;
+        const j = seed % (i + 1);
+        [indices[i], indices[j]] = [indices[j], indices[i]];
+      }
+
+      const shuffledOptions = indices.map((idx) => q.options[idx]);
+      const shuffledCorrect = indices.indexOf(q.correct);
+
+      return {
+        ...q,
+        options: shuffledOptions,
+        correct: shuffledCorrect,
+      };
+    });
+  }, [questions]);
   const CHAPTER_NAMES = chapterNames;
   const [currentQ, setCurrentQ] = useState(0);
   const [selected, setSelected] = useState(null); // index of selected option
@@ -93,7 +114,7 @@ export function QuizSlide({ questions, chapterNames }) {
         <div className="text-center mb-6">
           <div className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/30 rounded-full px-4 py-1.5 mb-3">
             <Icon name="HelpCircle" size={14} className="text-emerald-400" />
-            <span className="text-emerald-400 text-xs font-mono">Banco de Exercícios · Módulo 1</span>
+            <span className="text-emerald-400 text-xs font-mono">Banco de Exercícios</span>
           </div>
           <h2 className="text-3xl font-black cyber-text">Avaliação de Conhecimentos</h2>
           <p className="text-slate-500 text-sm mt-1">Disciplina: Computação Forense em Sistemas Operacionais</p>
